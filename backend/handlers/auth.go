@@ -90,6 +90,7 @@ func SignIn(w http.ResponseWriter, r *http.Request) {
 	// Check for password match
 	err = bcrypt.CompareHashAndPassword([]byte(existingUser.Password), []byte(user.Password))
 	if err != nil {
+		log.Println(err)
 		http.Error(w, "Invalid credentials", http.StatusUnauthorized)
 		return
 	}
