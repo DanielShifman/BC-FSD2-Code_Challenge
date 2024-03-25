@@ -1,5 +1,0 @@
-{
-  "mongoURI": "mongodb+srv://admin:uzE0u16RlWuGMkyX@cluster0.erqhouy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
-  "dbName" : "paintApp",
-  "sessionSecret": "r4o5qUVNXQxh+0r6+h9r7WsZDM0MoqQbA/QQNOzRMCPuoa7Uj6ARBm1RlBEzHY5a"
-}
