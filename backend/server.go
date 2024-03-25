@@ -67,7 +67,7 @@ func main() {
 	r.HandleFunc("/admin", handlers.AdminPreflightHandler).Methods("OPTIONS")
 
 	addr := fmt.Sprintf("0.0.0.0:%s", global.Port)
-	err := http.ListenAndServe(addr, nil)
+	err := http.ListenAndServe(addr, r)
 	if err != nil {
 		log.Fatal(err)
 		return
