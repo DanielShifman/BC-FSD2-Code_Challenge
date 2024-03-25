@@ -26,7 +26,8 @@ func loadConfig() {
 func initDB() {
 	// MongoDB connection
 	clientOptions := options.Client().ApplyURI(global.MongoURI)
-	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
 	global.MdbClient, _ = mongo.Connect(ctx, clientOptions)
 
 	// Check the connection
@@ -55,11 +56,6 @@ func main() {
 	r.HandleFunc("/signout", handlers.AuthPreflightHandler).Methods("OPTIONS")
 	r.HandleFunc("/inventory", handlers.InventoryPreflightHandler).Methods("OPTIONS")
 	r.HandleFunc("/admin", handlers.AdminPreflightHandler).Methods("OPTIONS")
-
-	fs := http.FileServer(http.Dir("../frontend/dist"))
-	r.PathPrefix("/").Handler(fs)
-
-	http.Handle("/", r)
 
 	addr := fmt.Sprintf(":%s", global.Port)
 	err := http.ListenAndServe(addr, nil)
