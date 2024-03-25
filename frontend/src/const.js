@@ -1,1 +1,1 @@
-export const BACKEND_ADDR = 'http://172.17.0.2:8080'
+export const BACKEND_ADDR = 'http://10.39.22.52:8080'

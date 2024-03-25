@@ -21,14 +21,14 @@ func loadConfig() {
 	global.SessionSecret = os.Getenv("SESSION_SECRET")
 	global.Port = os.Getenv("PORT")
 	if global.Port == "" {
-		log.Println("Port not set, defaulting to 8080")
+		fmt.Println("Port not set, defaulting to 8080")
 		global.Port = "8080"
 	}
-	log.Println("Loaded configuration variables")
-	log.Println("MongoURI: ", global.MongoURI)
-	log.Println("DBName: ", global.DbName)
-	log.Println("SessionSecret: ", global.SessionSecret)
-	log.Println("Port: ", global.Port)
+	fmt.Println("Loaded configuration variables")
+	fmt.Println("MongoURI: ", global.MongoURI)
+	fmt.Println("DBName: ", global.DbName)
+	fmt.Println("SessionSecret: ", global.SessionSecret)
+	fmt.Println("Port: ", global.Port)
 }
 
 // initDB initialises the connection to the database
@@ -44,7 +44,7 @@ func initDB() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Println("Connected to MongoDB!")
+	fmt.Println("Connected to MongoDB!")
 }
 
 func main() {
