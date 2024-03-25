@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"encoding/json"
+	"fmt"
 	"github.com/gorilla/mux"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -15,21 +15,11 @@ import (
 )
 
 // loadConfig loads sensitive configuration variables that are saved out-of-source for security reasons
-func loadConfig(path string) {
-	bytes, err := os.ReadFile(path)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	var c global.Config
-	err = json.Unmarshal(bytes, &c)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	global.MongoURI = c.MongoURI
-	global.DbName = c.DbName
-	global.SessionSecret = c.SessionSecret
+func loadConfig() {
+	global.MongoURI = os.Getenv("MONGO_URI")
+	global.DbName = os.Getenv("DB_NAME")
+	global.SessionSecret = os.Getenv("SESSION_SECRET")
+	global.Port = os.Getenv("PORT")
 }
 
 // initDB initialises the connection to the database
@@ -48,7 +38,7 @@ func initDB() {
 }
 
 func main() {
-	loadConfig("../config.json") //TODO: Move config to cloud
+	loadConfig()
 	initDB()
 	handlers.InitSessionStore()
 
@@ -71,7 +61,8 @@ func main() {
 
 	http.Handle("/", r)
 
-	err := http.ListenAndServe(":8088", nil)
+	addr := fmt.Sprintf(":%s", global.Port)
+	err := http.ListenAndServe(addr, nil)
 	if err != nil {
 		log.Fatal(err)
 		return
