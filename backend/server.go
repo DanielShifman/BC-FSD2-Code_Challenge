@@ -42,7 +42,7 @@ func initDB() {
 	// Check the connection
 	err := global.MdbClient.Ping(ctx, nil)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 	fmt.Println("Connected to MongoDB!")
 }
