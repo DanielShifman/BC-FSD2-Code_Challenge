@@ -57,7 +57,7 @@ func main() {
 	r.HandleFunc("/inventory", handlers.InventoryPreflightHandler).Methods("OPTIONS")
 	r.HandleFunc("/admin", handlers.AdminPreflightHandler).Methods("OPTIONS")
 
-	addr := fmt.Sprintf(":%s", global.Port)
+	addr := fmt.Sprintf("bc-fsd2-code-challenge-42mpbwkwra-uw.a.run.app:%s", global.Port)
 	err := http.ListenAndServe(addr, nil)
 	if err != nil {
 		log.Fatal(err)
