@@ -1,6 +1,6 @@
 const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
-  publicPath: '/BCPC-Frontend/',
+  publicPath: process.env.NODE_ENV === 'production' ? '/BC-FSD2-Code_Challenge/' : '/',
   transpileDependencies: true,
   pages: {
     index: {
