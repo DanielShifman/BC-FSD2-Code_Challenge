@@ -20,6 +20,15 @@ func loadConfig() {
 	global.DbName = os.Getenv("DB_NAME")
 	global.SessionSecret = os.Getenv("SESSION_SECRET")
 	global.Port = os.Getenv("PORT")
+	if global.Port == "" {
+		log.Println("Port not set, defaulting to 8080")
+		global.Port = "8080"
+	}
+	log.Println("Loaded configuration variables")
+	log.Println("MongoURI: ", global.MongoURI)
+	log.Println("DBName: ", global.DbName)
+	log.Println("SessionSecret: ", global.SessionSecret)
+	log.Println("Port: ", global.Port)
 }
 
 // initDB initialises the connection to the database
@@ -57,7 +66,7 @@ func main() {
 	r.HandleFunc("/inventory", handlers.InventoryPreflightHandler).Methods("OPTIONS")
 	r.HandleFunc("/admin", handlers.AdminPreflightHandler).Methods("OPTIONS")
 
-	addr := fmt.Sprintf("bc-fsd2-code-challenge-42mpbwkwra-uw.a.run.app:%s", global.Port)
+	addr := fmt.Sprintf("0.0.0.0:%s", global.Port)
 	err := http.ListenAndServe(addr, nil)
 	if err != nil {
 		log.Fatal(err)
